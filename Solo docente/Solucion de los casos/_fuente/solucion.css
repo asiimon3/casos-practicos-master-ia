@@ -1,0 +1,75 @@
+/* ══════════════════════════════════════════
+   Solución de los casos · estilos propios
+   Parte de «Para clase/_fuente/casos.css» (mismos tokens y
+   componentes) y solo añade las tablas de la solución.
+   ══════════════════════════════════════════ */
+
+/* ───────────── Portada ───────────── */
+
+.cover__warn {
+  display: flex; align-items: flex-start; gap: 12px; margin-top: 30px; max-width: 46ch;
+  padding: 14px 20px; border-left: 4px solid var(--orange); background: var(--tint-orange);
+  font-size: 16px; line-height: 1.5; color: var(--ink);
+}
+.cover__warn .ic { color: var(--orange-ink); margin-top: 2px; }
+
+/* ───────────── Diapositivas de tabla ───────────── */
+
+.sol { display: flex; flex-direction: column; gap: 26px; height: 100%; }
+.sol__head { display: grid; grid-template-columns: 560px 1fr; gap: 64px; align-items: end; }
+.sol__head .lede { margin-top: 0; font-size: 19px; }
+
+.sol-table { width: 100%; border-collapse: collapse; }
+.sol-table th {
+  padding: 0 16px 10px 0;
+  font: 600 13.5px var(--brand); color: var(--ink-2); text-align: left; vertical-align: bottom;
+  border-bottom: 1px solid var(--line-2);
+}
+.sol-table td {
+  padding: 10px 16px 10px 0;
+  font-size: 16.5px; line-height: 1.4; color: var(--ink-2); vertical-align: top; text-wrap: pretty;
+  border-bottom: 1px solid var(--line);
+}
+.sol-table td:first-child { color: var(--ink); font-weight: 700; }
+.sol-table td:last-child, .sol-table th:last-child { padding-right: 0; }
+.sol-table b { color: var(--ink); }
+.sol-table .num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.sol-table .dg-tag { font-size: 12.5px; }
+.sol-table .tags { display: flex; flex-wrap: wrap; gap: 4px; }
+.sol-table .rule {
+  display: inline-block; min-width: 30px; margin-right: 8px; padding: 0 5px;
+  font: 600 12.5px/1.6 var(--brand); text-align: center; color: var(--who-on); background: var(--who);
+}
+
+/* Etiqueta extra: lo que se evita en origen */
+.dg-tag--origen { color: var(--paper); background: var(--slate); }
+
+/* Hoy frente a propuesta */
+.sol-table--ba td:nth-child(2) { color: var(--ink-2); }
+.sol-table--ba td:nth-child(3) { color: var(--ink); }
+.sol-table--ba th:nth-child(3) { color: var(--who-ink); }
+
+.sol__body { display: grid; grid-template-columns: 1fr 460px; gap: 48px; align-items: start; }
+.sol__aside { display: grid; gap: 18px; }
+.sol__aside .brief__col { padding: 14px 20px 16px; }
+.sol__aside .dots { gap: 8px; margin-top: 12px; }
+.sol__aside .dots li { font-size: 16px; }
+.sol__aside .brief__col--pending { border-top-color: var(--slate); }
+.sol__aside .brief__col--pending h3 .ic { color: var(--slate); }
+.sol__aside .brief__col--pending .dots li::before { background: var(--slate); }
+
+.sol .start__note b { font-weight: 700; }
+
+/* ───────────── Modo estrecho ───────────── */
+
+html.is-reflow .sol { height: auto; gap: 20px; }
+html.is-reflow .sol__head { display: block; }
+html.is-reflow .sol__head .lede { margin-top: 14px; }
+html.is-reflow .sol__body { display: block; }
+html.is-reflow .sol__aside { margin-top: 24px; }
+html.is-reflow .sol-table, html.is-reflow .sol-table tbody, html.is-reflow .sol-table tr, html.is-reflow .sol-table td { display: block; width: auto; }
+html.is-reflow .sol-table thead { display: none; }
+html.is-reflow .sol-table tr { padding: 12px 0; border-bottom: 1px solid var(--line); }
+html.is-reflow .sol-table td { padding: 2px 0; border: 0; font-size: 15px; }
+html.is-reflow .sol-table td[data-k]::before { content: attr(data-k) ": "; font: 600 13px var(--brand); color: var(--ink-3); }
+html.is-reflow .cover__warn { font-size: 15px; }

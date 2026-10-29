@@ -1,0 +1,40 @@
+CASOS PRÁCTICOS · OPTIMIZACIÓN DE PROCESOS
+==========================================
+
+Cómo abrirlo
+------------
+Haz doble clic en «Casos practicos - Optimizacion de procesos.html».
+Funciona en Safari, Chrome y Edge, sin conexión a internet. Es un único
+archivo: se puede enviar tal cual a los alumnos. Solo los botones
+«Abrir Excalidraw» necesitan internet (abren excalidraw.com en otra pestaña).
+
+No incluye el diagrama del proceso de hoy de ningún caso: en su lugar hay
+notas de la reunión con el cliente, y los alumnos tienen que dibujarlo.
+La solución está en «Solo docente/Solucion de los casos».
+
+Empresas, personas y datos son ficticios.
+
+Cómo se maneja
+--------------
+- Flechas ← →, Av Pág / Re Pág o el mando de presentación: cambiar de diapositiva.
+- Tecla F: pantalla completa.
+- Raíl superior: salta entre los pasos de cada caso y del método.
+- Diagrama de la plantilla (paso «Dibujar»): pasa el cursor por un paso
+  para ver la explicación. Rueda para acercar, arrastrar para moverse y
+  «Ampliar» para verlo a pantalla completa.
+- «Abrir Excalidraw»: en la diapositiva «Hoy» de cada caso y en el paso
+  «Dibujar» del método.
+- Ficheros, gastos, secciones de la especificación y tecnologías:
+  elige un elemento de la lista de la izquierda (también con ↑ ↓).
+- Gastos del caso 2: «Ver qué decidió Javier» revela la decisión. Úsalo
+  después de que la clase haya votado.
+- «Mostrar pista»: en el encargo de cada caso. Está oculta por defecto.
+- «Descargar plantilla .md»: plantilla de la especificación para los alumnos.
+- «Antes de entregar»: las casillas se recuerdan solo en ese navegador.
+
+Carpeta _fuente
+---------------
+Archivos editables. Para regenerar el HTML tras un cambio (necesita
+Node.js 18 o superior), desde la carpeta _fuente:
+
+    node generar.mjs

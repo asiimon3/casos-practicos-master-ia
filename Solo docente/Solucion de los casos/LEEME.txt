@@ -1,0 +1,37 @@
+SOLUCIÓN DE LOS CASOS PRÁCTICOS · SOLO DOCENTE
+==============================================
+
+Para enseñar después de que los grupos presenten sus propuestas.
+No la compartas con los alumnos antes. No es la única respuesta
+correcta: sirve para comparar y comentar.
+
+Qué hay
+-------
+- Solucion - Casos practicos.html
+    Presentación con el mismo estilo y la misma navegación que la de
+    clase. Doble clic para abrirla; funciona sin internet.
+    Caso 1: proceso de hoy, diagnóstico, propuesta y qué cambia.
+    Caso 2: proceso de hoy, ¿regla o IA?, propuesta, los seis gastos
+    con la propuesta y qué cambia.
+
+- Caso 1 - esquema.excalidraw
+- Caso 2 - esquema.excalidraw
+    El esquema que se pide a los alumnos: marco «Hoy» y marco
+    «Propuesta» con la leyenda de colores. Para abrirlos: en
+    excalidraw.com, menú ☰ → Abrir, o arrastrar el archivo al lienzo.
+
+- Caso 1 - especificacion.md
+- Caso 2 - especificacion.md
+    Especificación de ejemplo con las 9 secciones de la plantilla.
+
+Carpeta _fuente
+---------------
+- solucion.html, solucion.css   Diapositivas y estilos propios.
+- solucion_datos.js             Diagramas de hoy y de la propuesta.
+- generar.mjs                   Regenera el HTML y los .excalidraw.
+
+Reutiliza casos.css, casos.js, fuentes y logos de «Para clase/_fuente»,
+así que un cambio de estilo allí llega también a la solución.
+Para regenerar (Node.js 18 o superior), desde _fuente:
+
+    node generar.mjs

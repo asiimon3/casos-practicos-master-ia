@@ -1,0 +1,29 @@
+FUENTE DE LOS CASOS PRÁCTICOS
+=============================
+
+Archivos
+--------
+- casos.html        Diapositivas (estructura y textos fijos).
+- casos.css         Estilos: colores, tipografía, componentes y modo móvil.
+- casos_datos.js    Contenido: ficheros de las tiendas, normas, gastos,
+                    secciones de la especificación y tecnologías. No lleva
+                    los diagramas del proceso de hoy: los dibujan los alumnos.
+                    Para cambiar un ejemplo, edita este archivo.
+- casos.js          Navegación, raíl, diagramas interactivos y exploradores.
+- assets/fonts/     Fuente Poppins (etiquetas y marca, como en la plataforma
+                    Sibou Lab). Los títulos y textos usan Arial.
+- assets/img/       Logos de la banda superior y foto de la portada.
+- generar.mjs       Genera «../Casos practicos - Optimizacion de procesos.html».
+                    También lo usa la solución del docente para incrustar
+                    estos mismos estilos.
+
+Regenerar tras un cambio
+------------------------
+Necesita Node.js 18 o superior. En Terminal, desde esta carpeta:
+
+    node generar.mjs
+
+Vista previa
+------------
+casos.html se puede abrir directamente para revisar cambios antes
+de regenerar.

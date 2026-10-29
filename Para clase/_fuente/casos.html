@@ -1,0 +1,541 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Casos prácticos de optimización</title>
+  <meta name="description" content="Dos casos ficticios de consultoría para practicar: entender un proceso, dibujarlo, especificar una propuesta y construir el reporte con ayuda de una IA.">
+  <link rel="stylesheet" href="casos.css">
+</head>
+<body>
+
+  <!-- Iconos (trazo 1.75, 24×24) -->
+  <svg class="sprite" aria-hidden="true" focusable="false">
+    <symbol id="i-diagram" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="6" rx="1.5"/><rect x="14" y="15" width="7" height="6" rx="1.5"/><path d="M10 6h3.5a2 2 0 0 1 2 2v7"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+    <symbol id="i-fit" viewBox="0 0 24 24"><path d="M3 8V5a2 2 0 0 1 2-2h3M16 3h3a2 2 0 0 1 2 2v3M21 16v3a2 2 0 0 1-2 2h-3M8 21H5a2 2 0 0 1-2-2v-3"/><rect x="8" y="8" width="8" height="8" rx="1"/></symbol>
+    <symbol id="i-expand" viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-prev" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
+    <symbol id="i-next" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+    <symbol id="i-screen" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M16 21h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m8.5 12.5 2.5 2.5 4.5-5"/></symbol>
+    <symbol id="i-tick" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></symbol>
+    <symbol id="i-question" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 0 1 4.9.7c0 1.7-2.4 2.3-2.4 3.8M12 17h.01"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+    <symbol id="i-warn" viewBox="0 0 24 24"><path d="M10.3 3.9 2.4 18a2 2 0 0 0 1.7 3h15.8a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></symbol>
+    <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.6.5 1 1.2 1.1 2V16h5v-.2c.1-.8.5-1.5 1.1-2A6 6 0 0 0 12 3z"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
+    <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></symbol>
+    <symbol id="i-pen" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></symbol>
+    <symbol id="i-code" viewBox="0 0 24 24"><path d="m8 7-5 5 5 5M16 7l5 5-5 5"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+    <symbol id="i-external" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></symbol>
+    <symbol id="i-tool" viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2.4-.6-.6-2.4z"/></symbol>
+  </svg>
+
+  <div class="viewport" id="viewport">
+    <div class="stage" id="stage">
+
+      <header class="chrome-top">
+        <ul class="chrome-top__logos" aria-label="Entidades participantes">
+          <li><img src="assets/img/logos-corporativos.png" alt="Cámara de Comercio de Granada, T-Systems" width="520" height="55"></li>
+          <li class="lg-ntt"><img src="assets/img/logo-nttdata.png" alt="NTT DATA" width="314" height="64"></li>
+        </ul>
+        <span class="brand">
+          <span class="brand__name">Casos prácticos</span>
+          <span class="chrome-top__section" id="section-label">Optimización de procesos</span>
+        </span>
+      </header>
+
+      <nav class="rail" id="rail" aria-label="Recorrido de cada caso">
+        <div class="rail__track" id="rail-track"></div>
+        <span class="rail__marker" id="rail-marker" aria-hidden="true"></span>
+      </nav>
+
+      <main class="slides" id="slides" aria-live="off">
+
+        <!-- 01 · Portada -->
+        <section class="slide slide--cover" id="portada" data-section="Optimización de procesos" aria-label="Portada">
+          <div class="cover">
+            <h1 class="cover__title">Del problema del cliente a una propuesta clara</h1>
+            <p class="cover__kind">Dos casos prácticos de consultoría</p>
+            <p class="cover__sub">Escuchad el problema, dibujadlo, escribid una especificación completa y dejad que la IA os ayude a construir el reporte.</p>
+            <p class="cover__meta">Máster en Inteligencia Artificial · Empresas, personas y datos ficticios</p>
+          </div>
+          <div class="lanes" data-lanes aria-hidden="true"></div>
+        </section>
+
+        <!-- 02 · Método -->
+        <section class="slide slide--light" id="metodo" data-section="Cómo vamos a trabajar" aria-label="Cómo vamos a trabajar">
+          <div class="method">
+            <div class="method__head">
+              <h2>Cómo vamos a trabajar</h2>
+              <p class="lede">El mismo camino que seguimos con un cliente real. La IA solo entra al final: el valor está en entender el problema y saber explicarlo.</p>
+            </div>
+            <div class="method__steps" role="tablist" aria-label="Pasos del método" data-method></div>
+            <div class="method__detail" id="method-detail" role="tabpanel" aria-live="polite"></div>
+            <p class="method__note"><b>Por qué en este orden</b>Si los tres primeros pasos están bien hechos, el cuarto es rápido. Si no, la IA rellena los huecos inventando, y lo hace con mucha seguridad.</p>
+          </div>
+        </section>
+
+        <!-- 03 · Los dos casos -->
+        <section class="slide slide--light" id="casos" data-section="Los dos casos" aria-label="Dos casos, dos niveles">
+          <div class="start">
+            <div class="start__head">
+              <h2>Dos casos, dos niveles</h2>
+              <p class="lede">Elegid uno. El primero es un problema de datos con reglas fijas; el segundo añade un punto en el que alguien tiene que «leer» documentos.</p>
+            </div>
+
+            <div class="compare" role="table" aria-label="Comparación entre los dos casos">
+              <div class="compare__row compare__row--head" role="row">
+                <span role="columnheader"><span class="visually-hidden">Aspecto</span></span>
+                <button type="button" class="compare__who compare__who--c1" role="columnheader" data-goto="c1-contexto">
+                  <b>Caso 1 · Las ventas del lunes</b><span>Lucía · cadena de tiendas de bicicletas</span>
+                </button>
+                <button type="button" class="compare__who compare__who--c2" role="columnheader" data-goto="c2-contexto">
+                  <b>Caso 2 · Las notas de gastos</b><span>Javier · consultora de 80 personas</span>
+                </button>
+              </div>
+              <div class="compare__row" role="row">
+                <span class="compare__k" role="rowheader">Qué hace hoy</span>
+                <p role="cell">Junta cada lunes los Excel de ventas de seis tiendas y prepara un resumen para dirección.</p>
+                <p role="cell">Revisa uno a uno los gastos de viaje que suben los empleados antes de pagarlos.</p>
+              </div>
+              <div class="compare__row" role="row">
+                <span class="compare__k" role="rowheader">Dónde duele</span>
+                <p role="cell"><b>Cuatro horas de copiar, pegar y corregir</b>, y unas cifras en las que dirección no confía.</p>
+                <p role="cell"><b>Tres días al mes leyendo tickets</b>, idas y vueltas por email y empleados que tardan semanas en cobrar.</p>
+              </div>
+              <div class="compare__row" role="row">
+                <span class="compare__k" role="rowheader">Qué datos hay</span>
+                <p role="cell">Seis ficheros por semana, cada uno a su manera, y un catálogo de productos.</p>
+                <p role="cell">Un formulario que guarda en una hoja de cálculo, las fotos de los tickets y una política en PDF.</p>
+              </div>
+              <div class="compare__row" role="row">
+                <span class="compare__k" role="rowheader">Para quién es el reporte</span>
+                <p role="cell">Lucía y el director, que no son técnicos.</p>
+                <p role="cell">Javier y la directora financiera, que tiene que aprobar el cambio.</p>
+              </div>
+              <div class="compare__row" role="row">
+                <span class="compare__k" role="rowheader">Dificultad</span>
+                <p role="cell"><span class="level" aria-label="Nivel 1 de 3"><i class="on"></i><i></i><i></i></span>Buen primer caso</p>
+                <p role="cell"><span class="level" aria-label="Nivel 2 de 3"><i class="on"></i><i class="on"></i><i></i></span>Un paso más</p>
+              </div>
+            </div>
+
+            <p class="start__note"><svg class="ic" aria-hidden="true"><use href="#i-question"/></svg>No hay una única solución correcta. Se valora que la propuesta resuelva el problema que el cliente tiene de verdad, sea sencilla y esté bien explicada.</p>
+          </div>
+        </section>
+
+        <!-- 04 · Caso 1 · Contexto -->
+        <section class="slide slide--module" id="c1-contexto" data-step="c1-contexto" data-who="c1" data-section="Caso 1 · Las ventas del lunes" aria-label="Caso 1: quién es Lucía y qué le pasa">
+          <div class="intro">
+            <div class="intro__story">
+              <p class="person"><span class="person__avatar" aria-hidden="true">L</span><span><b>Lucía</b>Responsable de administración · Rodalia, cadena de seis tiendas de bicicletas</span></p>
+              <blockquote class="quote">«Cada lunes pierdo la mañana copiando y pegando. Y cuando el director me pregunta si las cifras están bien, no siempre sé qué contestarle.»</blockquote>
+              <p class="intro__text">Cada tienda le envía por email un Excel con las ventas de la semana. Lucía los junta en un Excel maestro, los corrige y prepara un resumen que el director quiere tener <b>antes de las 12:00</b>.</p>
+              <p class="fiction">Caso ficticio: la empresa, las personas y los datos son inventados.</p>
+            </div>
+            <div class="intro__facts">
+              <dl class="figures">
+                <div><dt>Tiendas</dt><dd>6</dd><dd class="figures__sub">cinco físicas y una online</dd></div>
+                <div><dt>Líneas de venta</dt><dd>~1.200</dd><dd class="figures__sub">cada semana</dd></div>
+                <div><dt>Tiempo de Lucía</dt><dd>4 h</dd><dd class="figures__sub">todos los lunes</dd></div>
+                <div><dt>Productos en catálogo</dt><dd>380</dd><dd class="figures__sub">cada uno con su código</dd></div>
+              </dl>
+              <div class="tools">
+                <h3>Con qué trabaja hoy</h3>
+                <ul><li>Correo electrónico</li><li>Excel</li><li>Carpeta compartida en la nube</li><li>Catálogo de productos en Excel</li></ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 05 · Caso 1 · Hoy -->
+        <section class="slide slide--module" id="c1-hoy" data-step="c1-hoy" data-who="c1" data-section="Caso 1 · Las ventas del lunes" aria-label="Caso 1: cómo lo hace hoy Lucía">
+          <div class="module">
+            <div class="module__text">
+              <h2 class="module__title">Así es el lunes de Lucía</h2>
+              <ul class="chips"><li>Cada lunes</li><li>Seis ficheros</li><li>Todo a mano</li></ul>
+              <p class="module__claim">Casi todo el trabajo consiste en dejar los datos de cada tienda como deberían haber llegado.</p>
+              <h3 class="module__label">Qué pasa hoy</h3>
+              <ol class="how">
+                <li>Descarga los adjuntos y <b>abre los ficheros uno a uno</b>.</li>
+                <li>Copia las filas al maestro y <b>corrige fechas, columnas y nombres</b> de producto.</li>
+                <li>Hace el resumen y, si algo no cuadra, <b>repasa fila a fila</b>.</li>
+              </ol>
+              <dl class="deps">
+                <div><dt><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg>Tiempo</dt><dd>Unas cuatro horas cada lunes, siempre con prisa.</dd></div>
+                <div><dt><svg class="ic" aria-hidden="true"><use href="#i-warn"/></svg>Errores</dt><dd>En septiembre una tienda se contó dos veces.</dd></div>
+                <div><dt><svg class="ic" aria-hidden="true"><use href="#i-user"/></svg>Dirección</dt><dd>Recibe el informe tarde y duda de las cifras.</dd></div>
+              </dl>
+            </div>
+            <div class="viewer">
+              <div class="viewer__bar">
+                <span class="viewer__title"><svg class="ic" aria-hidden="true"><use href="#i-user"/></svg>Lo que contó Lucía en la reunión</span>
+                <span class="sample">Notas sin ordenar</span>
+              </div>
+              <div class="viewer__body viewer__body--flow">
+                <ul class="notes" aria-label="Notas de la reunión con Lucía">
+                  <li>«Copio las filas de cada fichero al Excel maestro, el de todo el año. Cuando las columnas vienen en otro orden, voy columna a columna.»</li>
+                  <li>«Las tiendas me mandan el Excel por email. Se supone que antes de las 10:00.»</li>
+                  <li>«Actualizo la tabla dinámica y el gráfico, y lo comparo a ojo con la semana anterior.»</li>
+                  <li>«Si falta una tienda, la llamo o le escribo y espero.»</li>
+                  <li>«Quito las filas repetidas, de cuando una tienda manda dos versiones, y las filas de TOTAL.»</li>
+                  <li>«Con mi informe, el director decide las reposiciones y las promociones de la semana.»</li>
+                  <li>«Guardo los adjuntos en una carpeta y los abro uno a uno, porque cada semana vienen distintos.»</li>
+                  <li>«Si algo le parece raro, el director me pregunta y yo vuelvo a repasar los datos fila a fila.»</li>
+                  <li>«Unifico las fechas, convierto los importes que vienen como texto y busco en el catálogo el código de cada producto.»</li>
+                  <li>«Exporto el resumen a PDF y se lo mando al director. Lo quiere a las 12:00, pero muchas veces llega más tarde.»</li>
+                </ul>
+              </div>
+              <div class="task">
+                <p class="task__text"><b>Vuestra tarea</b>Con estas notas, dibujad cómo es hoy el proceso: quién hace cada paso, qué datos entran y salen, y dónde duele. Ese dibujo irá en vuestro reporte, junto a la propuesta, para que Lucía vea que habéis entendido su problema.</p>
+                <a class="btn btn--primary" href="https://excalidraw.com" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pen"/></svg>Abrir Excalidraw<svg class="ic" aria-hidden="true"><use href="#i-external"/></svg><span class="visually-hidden"> (se abre en una pestaña nueva)</span></a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 06 · Caso 1 · Datos -->
+        <section class="slide slide--module" id="c1-datos" data-step="c1-datos" data-who="c1" data-section="Caso 1 · Las ventas del lunes" aria-label="Caso 1: los ficheros que recibe Lucía">
+          <div class="module">
+            <div class="module__text">
+              <h2 class="module__title">Seis tiendas, seis formatos</h2>
+              <p class="module__claim">Todas envían las ventas de la semana, pero cada una a su manera. Abrid cada fichero y fijaos en qué tendría que corregir Lucía.</p>
+              <h3 class="module__label">Elige un fichero</h3>
+              <div class="cases" role="radiogroup" aria-label="Ficheros de cada tienda" data-cases="ficheros"></div>
+            </div>
+            <div class="viewer">
+              <div class="viewer__bar">
+                <span class="viewer__title" id="file-title"><svg class="ic" aria-hidden="true"><use href="#i-file"/></svg><span></span></span>
+                <span class="sample">Datos de ejemplo</span>
+              </div>
+              <div class="viewer__body viewer__body--flow">
+                <div class="sheet" id="sheet-c1"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 07 · Caso 1 · Reto -->
+        <section class="slide slide--soft" id="c1-reto" data-step="c1-reto" data-who="c1" data-section="Caso 1 · Las ventas del lunes" aria-label="Caso 1: el encargo">
+          <div class="brief">
+            <div class="brief__head">
+              <h2>El encargo de Lucía</h2>
+              <p class="brief__ask">«Quiero que el lunes a las 10:30 el resumen esté hecho y pueda dedicarme a revisarlo, no a fabricarlo. Y saber al momento qué tienda no ha enviado.»</p>
+            </div>
+            <div class="brief__cols">
+              <div class="brief__col">
+                <h3><svg class="ic" aria-hidden="true"><use href="#i-lock"/></svg>Lo que hay que respetar</h3>
+                <ul class="dots">
+                  <li>No hay presupuesto para un ERP ni para software de pago.</li>
+                  <li>Las tiendas pueden usar una plantilla común, pero no van a aprender herramientas nuevas.</li>
+                  <li>Lucía domina Excel, pero no programa. Lo que se haga, tiene que poder lanzarlo ella.</li>
+                  <li>El informático externo viene un día a la semana.</li>
+                </ul>
+              </div>
+              <div class="brief__col">
+                <h3><svg class="ic" aria-hidden="true"><use href="#i-question"/></svg>Preguntas para analizarlo</h3>
+                <ul class="dots">
+                  <li>¿Qué pasos se repiten igual cada lunes?</li>
+                  <li>¿Qué problemas se pueden evitar en origen y cuáles hay que corregir después?</li>
+                  <li>¿Qué necesita ver el director y qué le sobra?</li>
+                  <li>¿Cómo sabría Lucía que el resultado es correcto?</li>
+                  <li>¿Qué pasa si una tienda no envía o envía dos veces?</li>
+                </ul>
+              </div>
+            </div>
+            <div class="hint" data-hint>
+              <button type="button" class="hint__btn" aria-expanded="false" aria-controls="hint-c1"><svg class="ic" aria-hidden="true"><use href="#i-bulb"/></svg>Mostrar pista</button>
+              <p class="hint__text" id="hint-c1" hidden>Casi todo lo que hace Lucía son reglas fijas que se repiten cada semana. ¿Qué herramienta conocéis capaz de leer muchos Excel, unificarlos, revisarlos y generar un resumen sin que nadie copie y pegue?</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 08 · Caso 2 · Contexto -->
+        <section class="slide slide--module" id="c2-contexto" data-step="c2-contexto" data-who="c2" data-section="Caso 2 · Las notas de gastos" aria-label="Caso 2: quién es Javier y qué le pasa">
+          <div class="intro">
+            <div class="intro__story">
+              <p class="person"><span class="person__avatar" aria-hidden="true">J</span><span><b>Javier</b>Administración · Faro Consultores, consultora de 80 personas</span></p>
+              <blockquote class="quote">«Leo cada ticket con lupa, busco la norma en el PDF y aun así se me escapan cosas. Mientras, la gente espera semanas para cobrar.»</blockquote>
+              <p class="intro__text">Los empleados suben cada gasto de viaje en un formulario, con la foto del ticket. Javier comprueba que todo cumple la política de gastos <b>antes de pasarlo a contabilidad</b>, que lo paga en la nómina.</p>
+              <p class="fiction">Caso ficticio: la empresa, las personas y los datos son inventados.</p>
+            </div>
+            <div class="intro__facts">
+              <dl class="figures">
+                <div><dt>Gastos al mes</dt><dd>~150</dd><dd class="figures__sub">de unas 80 personas</dd></div>
+                <div><dt>Tiempo de Javier</dt><dd>3 días</dd><dd class="figures__sub">cada mes</dd></div>
+                <div><dt>Se devuelven</dt><dd>1 de 3</dd><dd class="figures__sub">por algún problema</dd></div>
+                <div><dt>Hasta cobrar</dt><dd>6 sem.</dd><dd class="figures__sub">en el peor caso</dd></div>
+              </dl>
+              <div class="tools">
+                <h3>Con qué trabaja hoy</h3>
+                <ul><li>Formulario web</li><li>Hoja de cálculo con las respuestas</li><li>Carpeta con las fotos</li><li>Política de gastos en PDF</li><li>Excel mensual para contabilidad</li></ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 09 · Caso 2 · Hoy -->
+        <section class="slide slide--module" id="c2-hoy" data-step="c2-hoy" data-who="c2" data-section="Caso 2 · Las notas de gastos" aria-label="Caso 2: cómo lo hace hoy Javier">
+          <div class="module">
+            <div class="module__text">
+              <h2 class="module__title">Así revisa Javier cada gasto</h2>
+              <ul class="chips"><li>Continuo</li><li>Uno a uno</li><li>Todo a mano</li></ul>
+              <p class="module__claim">La mayoría de los gastos están bien, pero todos reciben la misma revisión lenta.</p>
+              <h3 class="module__label">Qué pasa hoy</h3>
+              <ol class="how">
+                <li>Abre la foto y <b>compara el ticket con lo que escribió el empleado</b>.</li>
+                <li>Comprueba <b>límites, plazos y categorías</b> en la política.</li>
+                <li>Si algo falla, <b>lo devuelve por email</b> y espera a que vuelva.</li>
+              </ol>
+              <dl class="deps">
+                <div><dt><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg>Tiempo</dt><dd>Entre 2 y 10 minutos por gasto, unos 3 días al mes.</dd></div>
+                <div><dt><svg class="ic" aria-hidden="true"><use href="#i-warn"/></svg>Errores</dt><dd>Duplicados y excesos que se escapan.</dd></div>
+                <div><dt><svg class="ic" aria-hidden="true"><use href="#i-user"/></svg>Empleados</dt><dd>No conocen bien la política y cobran tarde.</dd></div>
+              </dl>
+            </div>
+            <div class="viewer">
+              <div class="viewer__bar">
+                <span class="viewer__title"><svg class="ic" aria-hidden="true"><use href="#i-user"/></svg>Lo que contó Javier en la reunión</span>
+                <span class="sample">Notas sin ordenar</span>
+              </div>
+              <div class="viewer__body viewer__body--flow">
+                <ul class="notes" aria-label="Notas de la reunión con Javier">
+                  <li>«Compruebo los límites de cada categoría, los plazos, los conceptos que no se pagan y si ese ticket ya se pagó antes. De memoria o buscando en el PDF.»</li>
+                  <li>«Cada empleado rellena la fecha, la categoría, el importe y un comentario, y adjunta una foto del ticket hecha con el móvil.»</li>
+                  <li>«Si algo no cumple, le escribo un email explicando qué falta o qué está mal.»</li>
+                  <li>«Los gastos que apruebo los copio al Excel mensual que usa contabilidad para pagarlos en la nómina.»</li>
+                  <li>«Me llega un aviso por cada respuesta del formulario y abro la foto desde la carpeta compartida.»</li>
+                  <li>«Cuando el empleado lo vuelve a subir, empiezo la revisión desde el principio.»</li>
+                  <li>«Leo el ticket, a veces borroso o arrugado, y miro que coincida con lo que escribió el empleado.»</li>
+                  <li>«Mientras espero su respuesta, el gasto se queda parado. A veces, semanas.»</li>
+                  <li>«Si llega aprobado antes del cierre de nómina, se paga ese mes. Si no, al siguiente.»</li>
+                </ul>
+              </div>
+              <div class="task">
+                <p class="task__text"><b>Vuestra tarea</b>Con estas notas, dibujad cómo es hoy el proceso: quién hace cada paso, qué datos entran y salen, y dónde duele. Ese dibujo irá en vuestro reporte, junto a la propuesta, para que Javier vea que habéis entendido su problema.</p>
+                <a class="btn btn--primary" href="https://excalidraw.com" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pen"/></svg>Abrir Excalidraw<svg class="ic" aria-hidden="true"><use href="#i-external"/></svg><span class="visually-hidden"> (se abre en una pestaña nueva)</span></a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 10 · Caso 2 · Normas -->
+        <section class="slide slide--light" id="c2-normas" data-step="c2-normas" data-who="c2" data-section="Caso 2 · Las notas de gastos" aria-label="Caso 2: la política de gastos">
+          <div class="rules">
+            <div class="rules__head">
+              <div>
+                <h2>Lo que dice la política de gastos</h2>
+                <p class="lede">Doce páginas de PDF que Javier se sabe de memoria y los empleados casi nunca leen. Estas son las normas que más se revisan.</p>
+              </div>
+            </div>
+            <ol class="rules__grid" id="rules-c2"></ol>
+          </div>
+        </section>
+
+        <!-- 11 · Caso 2 · Gastos -->
+        <section class="slide slide--module" id="c2-gastos" data-step="c2-gastos" data-who="c2" data-section="Caso 2 · Las notas de gastos" aria-label="Caso 2: seis gastos para revisar">
+          <div class="module">
+            <div class="module__text">
+              <h2 class="module__title">Seis gastos de este mes</h2>
+              <p class="module__claim">Poneos en el lugar de Javier: comparad el formulario con el ticket, decidid qué haríais y después mirad lo que hizo él.</p>
+              <h3 class="module__label">Elige un gasto</h3>
+              <div class="cases" role="radiogroup" aria-label="Gastos para revisar" data-cases="gastos"></div>
+            </div>
+            <div class="viewer">
+              <div class="viewer__bar">
+                <span class="viewer__title" id="exp-title"></span>
+                <span class="sample">Datos de ejemplo</span>
+              </div>
+              <div class="viewer__body viewer__body--flow">
+                <div class="expense" id="exp-c2"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 12 · Caso 2 · Reto -->
+        <section class="slide slide--soft" id="c2-reto" data-step="c2-reto" data-who="c2" data-section="Caso 2 · Las notas de gastos" aria-label="Caso 2: el encargo">
+          <div class="brief">
+            <div class="brief__head">
+              <h2>El encargo de Javier</h2>
+              <p class="brief__ask">«Quiero dedicar mi tiempo a los gastos que de verdad tienen un problema, no a revisar cien tickets que están bien. Y que la gente cobre en el mes.»</p>
+            </div>
+            <div class="brief__cols">
+              <div class="brief__col">
+                <h3><svg class="ic" aria-hidden="true"><use href="#i-lock"/></svg>Lo que hay que respetar</h3>
+                <ul class="dots">
+                  <li>La decisión final de pagar o no la sigue tomando Javier. Lo exige la auditoría.</li>
+                  <li>Los tickets tienen datos personales: cuidado con dónde se envían.</li>
+                  <li>El formulario se puede cambiar, pero tiene que seguir siendo sencillo para el empleado.</li>
+                  <li>El presupuesto es pequeño: nada de grandes plataformas.</li>
+                </ul>
+              </div>
+              <div class="brief__col">
+                <h3><svg class="ic" aria-hidden="true"><use href="#i-question"/></svg>Preguntas para analizarlo</h3>
+                <ul class="dots">
+                  <li>¿Qué comprobaciones son una regla exacta y cuáles exigen leer o interpretar?</li>
+                  <li>¿Dónde aportaría de verdad la IA y dónde basta una regla?</li>
+                  <li>¿Qué gastos podrían pasar sin que Javier los mire uno a uno?</li>
+                  <li>¿Qué se puede evitar antes de que el empleado envíe el gasto?</li>
+                  <li>¿Cómo mediríais que la solución funciona?</li>
+                </ul>
+              </div>
+            </div>
+            <div class="hint" data-hint>
+              <button type="button" class="hint__btn" aria-expanded="false" aria-controls="hint-c2"><svg class="ic" aria-hidden="true"><use href="#i-bulb"/></svg>Mostrar pista</button>
+              <p class="hint__text" id="hint-c2" hidden>No todo necesita IA. Separad lo que es una regla (un límite, una fecha, un duplicado) de lo que exige leer una imagen. Quizá la IA solo haga falta en un punto concreto, y siempre con Javier revisando.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 13 · Paso 1 · Excalidraw -->
+        <section class="slide slide--module" id="paso-dibujo" data-step="paso-dibujo" data-who="m" data-section="Método · Paso 1: dibujar" aria-label="Paso 1: dibujar el problema y la propuesta">
+          <div class="module">
+            <div class="module__text">
+              <h2 class="module__title">Primero, dibujadlo</h2>
+              <ul class="chips"><li>Excalidraw</li><li>Un solo lienzo</li><li>Dos marcos</li></ul>
+              <p class="module__claim">Si no cabe en un dibujo, todavía no está claro. El esquema es vuestra primera prueba de que habéis entendido el problema.</p>
+              <h3 class="module__label">Un buen esquema tiene</h3>
+              <ol class="how">
+                <li>Un marco <b>«Hoy»</b> y otro <b>«Propuesta»</b>, con los mismos pasos alineados.</li>
+                <li>Quién hace cada paso y <b>qué datos entran y salen</b>.</li>
+                <li>Los puntos de dolor marcados y una <b>leyenda de colores</b>: manual, automático, IA, persona.</li>
+              </ol>
+              <div class="module__foot">
+                <p>Entregad el archivo <b>.excalidraw</b> y una exportación en <b>.png</b> o <b>.svg</b>. El SVG también os servirá dentro del reporte.</p>
+                <a class="btn btn--primary" href="https://excalidraw.com" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pen"/></svg>Abrir Excalidraw y empezar a dibujar<svg class="ic" aria-hidden="true"><use href="#i-external"/></svg><span class="visually-hidden"> (se abre en una pestaña nueva)</span></a>
+              </div>
+            </div>
+            <div class="viewer">
+              <div class="viewer__bar">
+                <span class="viewer__title"><svg class="ic" aria-hidden="true"><use href="#i-pen"/></svg>Plantilla de esquema</span>
+                <ul class="tag-legend" aria-label="Leyenda"><li><i class="dg-tag dg-tag--manual">Manual</i></li><li><i class="dg-tag dg-tag--auto">Automático</i></li><li><i class="dg-tag dg-tag--ia">IA</i></li><li><i class="dg-tag dg-tag--humano">Decide una persona</i></li></ul>
+              </div>
+              <div class="viewer__body">
+                <div class="sketch" id="sketch" data-sketch></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 14 · Paso 2 · Especificación -->
+        <section class="slide slide--module" id="paso-spec" data-step="paso-spec" data-who="m" data-section="Método · Paso 2: especificar" aria-label="Paso 2: escribir la especificación en Markdown">
+          <div class="module">
+            <div class="module__text">
+              <h2 class="module__title">Después, escribid la especificación</h2>
+              <p class="module__claim">Un Markdown que la IA pueda seguir sin preguntar. Cada sección responde a una pregunta. Elegid una para ver la diferencia entre pedir algo vago y algo concreto.</p>
+              <div class="cases cases--compact" role="radiogroup" aria-label="Secciones de la especificación" data-cases="spec"></div>
+              <button type="button" class="btn btn--primary spec__dl" id="spec-download"><svg class="ic" aria-hidden="true"><use href="#i-download"/></svg>Descargar plantilla .md</button>
+            </div>
+            <div class="viewer">
+              <div class="viewer__bar">
+                <span class="viewer__title"><svg class="ic" aria-hidden="true"><use href="#i-code"/></svg>especificacion.md</span>
+                <span class="sample">Ejemplo: una clínica veterinaria</span>
+              </div>
+              <div class="viewer__body viewer__body--flow">
+                <div class="spec" id="spec-view"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 15 · Paso 3 · Tecnologías -->
+        <section class="slide slide--module" id="paso-tec" data-step="paso-tec" data-who="m" data-section="Método · Paso 3: construir" aria-label="Paso 3: con qué construir el reporte">
+          <div class="module">
+            <div class="module__text">
+              <h2 class="module__title">Por último, decid con qué construirlo</h2>
+              <p class="module__claim">La IA elige peor que vosotros si no se lo decís. Nombrad las herramientas en la especificación y explicad para qué es cada una.</p>
+              <h3 class="module__label">Elige qué necesitas</h3>
+              <div class="cases" role="radiogroup" aria-label="Necesidades del reporte" data-cases="tec"></div>
+            </div>
+            <div class="viewer">
+              <div class="viewer__bar">
+                <span class="viewer__title" id="tec-title"><svg class="ic" aria-hidden="true"><use href="#i-tool"/></svg><span></span></span>
+              </div>
+              <div class="viewer__body viewer__body--flow">
+                <div class="tec" id="tec-view"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 16 · Entrega -->
+        <section class="slide slide--soft" id="entrega" data-step="entrega" data-who="m" data-section="Método · Entrega" aria-label="Qué entregáis y cómo se valora">
+          <div class="deliver">
+            <div class="deliver__head">
+              <h2>Qué entregáis y cómo se valora</h2>
+              <p class="lede">El peso está en el análisis y en la especificación. Un reporte vistoso con un problema mal entendido no aprueba.</p>
+            </div>
+            <div class="weights" aria-label="Peso orientativo de cada entrega">
+              <div class="weights__bar" aria-hidden="true"><span style="--w: 35" class="w1"></span><span style="--w: 40" class="w2"></span><span style="--w: 25" class="w3"></span></div>
+              <ol class="weights__list">
+                <li class="w1"><b>Esquema en Excalidraw</b><em>35 %</em><span>Se entiende el proceso actual, dónde duele y qué cambia con la propuesta.</span></li>
+                <li class="w2"><b>Especificación en Markdown</b><em>40 %</em><span>Completa, concreta y ordenada: la IA podría construir el reporte sin preguntar.</span></li>
+                <li class="w3"><b>Reporte HTML</b><em>25 %</em><span>Enseña al cliente su proceso de hoy junto a vuestra propuesta, funciona sin errores y respeta la especificación.</span></li>
+              </ol>
+            </div>
+            <div class="deliver__check">
+              <h3>Antes de entregar</h3>
+              <ul class="todo" data-todo="check">
+                <li>El esquema distingue lo manual, lo automático, la IA y lo que decide una persona</li>
+                <li>La especificación tiene todas las secciones de la plantilla</li>
+                <li>Cada idea de la propuesta responde a un dolor concreto del cliente</li>
+                <li>El reporte enseña vuestro diagrama de hoy junto al de la propuesta</li>
+                <li>El reporte se abre con doble clic, sin internet, y no da errores</li>
+                <li>Los datos de ejemplo están marcados como ficticios</li>
+                <li>Habéis revisado el texto que ha generado la IA, línea a línea</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- 17 · Cierre -->
+        <section class="slide slide--black" id="cierre" data-tone="dark" data-section="Cierre" aria-label="Cierre">
+          <div class="cover cover--close">
+            <h1 class="cover__title">Entended el problema antes de pedirle nada a la IA</h1>
+            <dl class="questions">
+              <div><dt>Caso 1</dt><dd>¿Cómo conseguimos que Lucía revise el resumen en lugar de fabricarlo?</dd></div>
+              <div><dt>Caso 2</dt><dd>¿Cómo conseguimos que Javier solo mire los gastos que tienen un problema?</dd></div>
+            </dl>
+          </div>
+          <div class="lanes lanes--close" data-lanes aria-hidden="true"></div>
+        </section>
+
+      </main>
+
+      <footer class="chrome-bottom">
+        <span class="chrome-bottom__title">Casos prácticos · Optimización de procesos</span>
+        <div class="progress" aria-hidden="true"><span class="progress__fill" id="progress-fill"></span></div>
+        <div class="deck-nav">
+          <button class="icon-btn" id="btn-fullscreen" type="button" aria-label="Pantalla completa" title="Pantalla completa (F)"><svg class="ic" aria-hidden="true"><use href="#i-screen"/></svg></button>
+          <button class="icon-btn" id="slide-prev" type="button" aria-label="Diapositiva anterior" title="Anterior (←)"><svg class="ic" aria-hidden="true"><use href="#i-prev"/></svg></button>
+          <span class="deck-nav__counter" id="slide-counter" aria-live="polite">01 / 17</span>
+          <button class="icon-btn" id="slide-next" type="button" aria-label="Diapositiva siguiente" title="Siguiente (→)"><svg class="ic" aria-hidden="true"><use href="#i-next"/></svg></button>
+        </div>
+      </footer>
+
+    </div>
+  </div>
+
+  <!-- Vista ampliada de los diagramas -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-labelledby="lightbox-title" hidden>
+    <div class="lightbox__bar">
+      <h2 class="lightbox__title" id="lightbox-title"></h2>
+      <button class="icon-btn icon-btn--dark" id="lightbox-close" type="button" aria-label="Cerrar vista ampliada" title="Cerrar (Esc)"><svg class="ic" aria-hidden="true"><use href="#i-close"/></svg></button>
+    </div>
+    <div class="lightbox__body" id="lightbox-body"></div>
+  </div>
+
+  <script src="casos_datos.js"></script>
+  <script src="casos.js"></script>
+</body>
+</html>
